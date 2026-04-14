@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Superfluidity — Business, IT & AI Consultancy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080c12;
+      --surface: #080c12;
+      --surface2: #0d1420;
+      --border: rgba(255,255,255,.07);
+      --blue: #2563eb;
+      --blue-bright: #3b82f6;
+      --cyan: #06b6d4;
+      --text: #e8edf5;
+      --muted: #6b7a94;
+      --dim: #3d4a60;
+      --syne: 'Syne', sans-serif;
+      --serif: 'Instrument Serif', Georgia, serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--syne); overflow-x: hidden; }
+
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: .022; pointer-events: none;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .9rem 2.5rem;
+      background: rgba(8,12,18,.9); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      animation: fadeDown .5s ease both;
+    }
+    .nav-logo { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
+    .logo-mark {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      border-radius: 7px; display: flex; align-items: center; justify-content: center;
+      font-size: .6rem; font-weight: 700; color: #fff; font-family: var(--mono); flex-shrink: 0;
+    }
+    .logo-text { font-family: var(--syne); font-size: .95rem; font-weight: 700; color: var(--text); letter-spacing: -.01em; }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; align-items: center; }
+    .nav-links a { font-family: var(--mono); font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta { padding: .5rem 1.2rem !important; background: var(--blue) !important; color: #fff !important; border-radius: 6px !important; }
+    .nav-cta:hover { background: var(--blue-bright) !important; color: #fff !important; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 5.5rem 2.5rem 3rem; position: relative; overflow: hidden;
+    }
+    
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
+    .blob-1 { width: 500px; height: 500px; background: rgba(37,99,235,.17); top: -80px; right: -80px; animation: drift 12s ease-in-out infinite alternate; }
+    .blob-2 { width: 320px; height: 320px; background: rgba(6,182,212,.11); bottom: 0; left: 8%; animation: drift 16s ease-in-out infinite alternate-reverse; }
+    @keyframes drift { from { transform: translate(0,0); } to { transform: translate(25px,18px); } }
+
+    .hero-inner { max-width: 860px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .3rem .85rem; background: rgba(37,99,235,.12); border: 1px solid rgba(37,99,235,.3);
+      border-radius: 100px; font-family: var(--mono); font-size: .58rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--cyan); margin-bottom: 1.4rem;
+      animation: fadeUp .7s .1s ease both;
+    }
+    .badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); animation: pulse 2s ease infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.4; transform:scale(.8); } }
+
+    h1 {
+      font-family: var(--syne); font-size: clamp(2rem, 3.5vw, 3.4rem);
+      font-weight: 800; line-height: 1.05; letter-spacing: -.03em;
+      margin-bottom: 1.4rem; animation: fadeUp .7s .2s ease both;
+    }
+    h1 .accent {
+      background: linear-gradient(90deg, var(--blue-bright), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      font-style: italic; font-family: var(--serif);
+    }
+    .hero-sub {
+      font-size: 1.05rem; line-height: 1.75; color: var(--muted);
+      max-width: 54ch; font-weight: 400; margin-bottom: 2.2rem;
+      animation: fadeUp .7s .3s ease both;
+    }
+    .hero-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; animation: fadeUp .7s .4s ease both; }
+    .btn-primary {
+      padding: .75rem 1.8rem; background: var(--blue); color: #fff;
+      border-radius: 7px; font-family: var(--mono); font-size: .68rem;
+      letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
+      transition: background .2s, transform .2s; border: none; cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--blue-bright); transform: translateY(-2px); }
+    .btn-ghost {
+      padding: .75rem 1.8rem; border: 1px solid var(--border);
+      color: var(--muted); border-radius: 7px; font-family: var(--mono);
+      font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { border-color: var(--blue-bright); color: var(--text); }
+
+    /* SHARED */
+    section { position: relative; z-index: 1; }
+    .sw { max-width: 1200px; margin: 0 auto; padding: 4rem 2.5rem; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--mono); font-size: .58rem; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--blue-bright); margin-bottom: .9rem;
+    }
+    .eyebrow-line { width: 20px; height: 1px; background: var(--blue-bright); }
+    .sh { font-size: clamp(1.6rem, 2.5vw, 2.4rem); font-weight: 700; letter-spacing: -.025em; line-height: 1.1; margin-bottom: .9rem; }
+    .sh .serif { font-family: var(--serif); font-style: italic; font-weight: 400; }
+    .sb { font-size: .95rem; line-height: 1.75; color: var(--muted); max-width: 54ch; }
+
+    /* SERVICES */
+    #offerings { background: var(--surface); }
+    #offerings .sw { position: relative; z-index: 1; }
+    .off-top { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: end; margin-bottom: 2.5rem; }
+    .offerings-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    }
+    .offer-card { background: var(--surface2); padding: 1.6rem 1.5rem; transition: background .25s; }
+    .offer-card:hover { background: #161e2e; }
+    .offer-icon { width: 36px; height: 36px; background: rgba(37,99,235,.12); border: 1px solid rgba(37,99,235,.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1rem; }
+    .offer-title { font-size: .95rem; font-weight: 600; margin-bottom: .5rem; letter-spacing: -.01em; }
+    .offer-desc { font-size: .82rem; line-height: 1.7; color: var(--muted); }
+    .offer-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .9rem; }
+    .offer-tag { padding: .18rem .55rem; background: rgba(37,99,235,.08); border: 1px solid rgba(37,99,235,.15); border-radius: 4px; font-family: var(--mono); font-size: .5rem; letter-spacing: .1em; text-transform: uppercase; color: var(--blue-bright); }
+
+    /* WHO WE SERVE */
+    #serve { background: var(--bg); }
+    .serve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+    .serve-card { border: 1px solid var(--border); border-radius: 10px; padding: 2rem; position: relative; overflow: hidden; transition: border-color .3s; }
+    .serve-card:hover { border-color: var(--blue); }
+    .serve-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--blue-bright), transparent); opacity: 0; transition: opacity .3s; }
+    .serve-card:hover::before { opacity: 1; }
+    .serve-type { font-family: var(--mono); font-size: .57rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); margin-bottom: .7rem; }
+    .serve-title { font-size: 1.3rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: .7rem; }
+    .serve-desc { font-size: .85rem; line-height: 1.75; color: var(--muted); margin-bottom: 1.3rem; }
+    .serve-list { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .serve-list li { display: flex; align-items: flex-start; gap: .65rem; font-size: .83rem; color: var(--muted); }
+    .serve-list li::before { content: '\2192'; color: var(--blue-bright); font-family: var(--mono); font-size: .75rem; flex-shrink: 0; margin-top: .05em; }
+    .serve-bg { position: absolute; bottom: -15px; right: -5px; font-size: 6rem; font-weight: 800; color: rgba(37,99,235,.04); pointer-events: none; line-height: 1; }
+
+    /* AI PRACTICE */
+    #ai { background: #080c12; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .ai-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .ai-visual { display: flex; flex-direction: column; gap: .75rem; }
+    .ai-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.3rem; }
+    .ai-card-2 { border-color: rgba(37,99,235,.3); }
+    .ai-card-label { font-family: var(--mono); font-size: .54rem; letter-spacing: .14em; text-transform: uppercase; color: var(--cyan); margin-bottom: .4rem; }
+    .ai-card-title { font-size: .85rem; font-weight: 600; margin-bottom: .3rem; }
+    .ai-card-val { font-size: .75rem; color: var(--muted); }
+    .ai-bar { height: 3px; background: var(--border); border-radius: 2px; margin-top: .65rem; overflow: hidden; }
+    .ai-bar-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--cyan)); border-radius: 2px; animation: barGrow 2s 1s ease both; }
+    @keyframes barGrow { from { width: 0; } }
+    .ai-features { margin-top: 2rem; display: flex; flex-direction: column; gap: .85rem; }
+    .ai-feature { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem; background: rgba(255,255,255,.02); border: 1px solid var(--border); border-radius: 9px; transition: border-color .25s; }
+    .ai-feature:hover { border-color: rgba(37,99,235,.35); }
+    .ai-feature-icon { width: 32px; height: 32px; flex-shrink: 0; background: rgba(6,182,212,.1); border: 1px solid rgba(6,182,212,.2); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: .85rem; }
+    .ai-feature-title { font-size: .88rem; font-weight: 600; margin-bottom: .2rem; }
+    .ai-feature-desc { font-size: .78rem; color: var(--muted); line-height: 1.6; }
+
+    /* PROCESS */
+    #process { background: var(--surface); }
+    .process-steps { display: grid; grid-template-columns: repeat(5, 1fr); margin-top: 2.5rem; position: relative; }
+    .process-steps::before { content: ''; position: absolute; top: 20px; left: 10%; right: 10%; height: 1px; background: linear-gradient(90deg, transparent, var(--blue), var(--cyan), var(--blue), transparent); }
+    .process-step { padding: 0 .75rem; text-align: center; }
+    .step-circle { width: 40px; height: 40px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--blue); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.1rem; font-family: var(--mono); font-size: .6rem; letter-spacing: .1em; color: var(--blue-bright); position: relative; z-index: 1; }
+    .step-name { font-size: .88rem; font-weight: 600; margin-bottom: .45rem; }
+    .step-desc { font-size: .75rem; color: var(--muted); line-height: 1.6; }
+
+    /* CONTACT */
+    #contact { background: var(--bg); }
+    .contact-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start; margin-top: 2.5rem; }
+    .contact-left p { font-size: .95rem; line-height: 1.8; color: var(--muted); margin-bottom: 1.2rem; }
+    .contact-details { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.1rem; }
+    .cd-row { display: flex; align-items: flex-start; gap: .85rem; }
+    .cd-icon { width: 34px; height: 34px; flex-shrink: 0; background: rgba(37,99,235,.1); border: 1px solid rgba(37,99,235,.2); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: .85rem; }
+    .cd-label { font-family: var(--mono); font-size: .54rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: .15rem; }
+    .cd-val { font-size: .9rem; color: var(--text); }
+    .contact-form { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; }
+    .form-title { font-size: 1.1rem; font-weight: 700; margin-bottom: .3rem; }
+    .form-sub { font-family: var(--mono); font-size: .58rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .fields { display: flex; flex-direction: column; gap: .85rem; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; }
+    .field { display: flex; flex-direction: column; gap: .35rem; }
+    .field label { font-family: var(--mono); font-size: .54rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+    .field input, .field select, .field textarea {
+      background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 7px;
+      color: var(--text); font-family: var(--syne); font-size: .88rem;
+      padding: .62rem .9rem; outline: none; transition: border-color .2s, background .2s; resize: none;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: var(--dim); }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--blue); background: rgba(37,99,235,.04); }
+    .field select option { background: #0d1420; }
+    .btn-submit { width: 100%; margin-top: .4rem; padding: .85rem; background: linear-gradient(90deg, var(--blue), #1d4ed8); border: none; border-radius: 7px; color: #fff; cursor: pointer; font-family: var(--mono); font-size: .65rem; letter-spacing: .14em; text-transform: uppercase; transition: opacity .2s, transform .15s; }
+    .btn-submit:hover { opacity: .9; transform: translateY(-1px); }
+    .form-ok { display: none; margin-top: .9rem; text-align: center; font-family: var(--mono); font-size: .65rem; letter-spacing: .14em; text-transform: uppercase; color: var(--cyan); }
+
+    /* FOOTER */
+    footer { background: var(--surface); border-top: 1px solid var(--border); padding: 1.6rem 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .75rem; }
+    .footer-logo { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
+    .footer-logo .logo-text { font-size: .88rem; }
+    .footer-links { display: flex; gap: 1.8rem; }
+    .footer-links a { font-family: var(--mono); font-size: .57rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { font-family: var(--mono); font-size: .54rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+
+    /* ANIMATIONS */
+    @keyframes fadeDown { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:none; } }
+    @keyframes fadeUp   { from { opacity:0; transform:translateY(16px);  } to { opacity:1; transform:none; } }
+    .reveal { opacity:0; transform:translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.visible { opacity:1; transform:none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: .85rem 1.5rem; }
+      .nav-links li:not(:last-child) { display: none; }
+      .sw { padding: 2.5rem 1.25rem; }
+      .off-top { grid-template-columns: 1fr; gap: 1.2rem; }
+      .offerings-grid { grid-template-columns: 1fr; }
+      .serve-grid { grid-template-columns: 1fr; }
+      .ai-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .ai-visual { height: auto; margin-bottom: 0; }
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .process-steps::before { display: none; }
+      .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .field-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+    @media (max-width: 560px) {
+      h1 { font-size: 1.9rem; }
+      #hero { padding: 5.5rem 1.25rem 2.5rem; }
+      .hero-badge { font-size: .5rem; padding: .28rem .7rem; }
+      .hero-sub { font-size: .92rem; }
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+      .btn-primary, .btn-ghost { width: 100%; text-align: center; }
+      .process-steps { grid-template-columns: 1fr; }
+      .serve-card { padding: 1.5rem; }
+      .contact-form { padding: 1.5rem; }
+      .off-top { gap: 1rem; }
+      .sh { font-size: 1.5rem; }
+      footer { padding: 1.4rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <div class="logo-mark">SF</div>
+    <span class="logo-text">Superfluidity</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#offerings">Services</a></li>
+    <li><a href="#serve">Who We Serve</a></li>
+    <li><a href="#ai">AI Practice</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="badge-dot"></span>Business &middot; IT &middot; AI Consultancy &middot; Brisbane, AU</div>
+    <h1>Smarter systems.<br><span class="accent">Faster growth.</span><br>Zero friction.</h1>
+    <p class="hero-sub">Superfluidity helps SMEs and enterprise organisations align business strategy, technology infrastructure, and AI capability &mdash; so they move faster and compete smarter.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Start a conversation</a>
+      <a href="#offerings" class="btn-ghost">Explore services &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="offerings">
+  <div class="sw">
+    <div class="off-top">
+      <div>
+        <p class="eyebrow reveal"><span class="eyebrow-line"></span>What we do</p>
+        <h2 class="sh reveal">End-to-end consulting,<br><span class="serif">strategy to execution.</span></h2>
+      </div>
+      <p class="sb reveal">Every engagement is tailored to your scale, budget, and goals &mdash; practical advice without the enterprise price tag.</p>
+    </div>
+    <div class="offerings-grid">
+      <div class="offer-card reveal">
+        <div class="offer-icon">&#128188;</div>
+        <h3 class="offer-title">Business Strategy &amp; Transformation</h3>
+        <p class="offer-desc">Aligning your operating model and market positioning to unlock sustainable growth and competitive advantage.</p>
+        <div class="offer-tags"><span class="offer-tag">Strategy</span><span class="offer-tag">Operating Model</span><span class="offer-tag">Growth</span></div>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">&#128421;</div>
+        <h3 class="offer-title">IT Strategy &amp; Modernisation</h3>
+        <p class="offer-desc">Auditing your tech stack and building a pragmatic roadmap &mdash; cloud migration, infrastructure uplift, and legacy retirement.</p>
+        <div class="offer-tags"><span class="offer-tag">Cloud</span><span class="offer-tag">Infrastructure</span><span class="offer-tag">Roadmap</span></div>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">&#129302;</div>
+        <h3 class="offer-title">AI &amp; Automation Advisory</h3>
+        <p class="offer-desc">Identifying where AI creates real value &mdash; and implementing responsibly. LLM integration, workflow automation, and data pipelines.</p>
+        <div class="offer-tags"><span class="offer-tag">Gen AI</span><span class="offer-tag">Automation</span><span class="offer-tag">LLMs</span></div>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">&#128272;</div>
+        <h3 class="offer-title">Cyber Security &amp; Compliance</h3>
+        <p class="offer-desc">Risk assessments and compliance frameworks (Essential Eight, ISO 27001) scaled to your organisation's size and risk appetite.</p>
+        <div class="offer-tags"><span class="offer-tag">Essential Eight</span><span class="offer-tag">ISO 27001</span><span class="offer-tag">Risk</span></div>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">&#128202;</div>
+        <h3 class="offer-title">Data &amp; Analytics</h3>
+        <p class="offer-desc">Data governance, BI platforms, and dashboards that turn raw information into decisions you can act on &mdash; plus end-to-end data migration to move, consolidate, and modernise your data assets safely.</p>
+        <div class="offer-tags"><span class="offer-tag">BI</span><span class="offer-tag">Governance</span><span class="offer-tag">Analytics</span><span class="offer-tag">Data Migration</span></div>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">&#128279;</div>
+        <h3 class="offer-title">Systems Integration &amp; ERP</h3>
+        <p class="offer-desc">Connecting CRM, ERP, HRIS, and custom APIs so data flows freely &mdash; eliminating silos and manual overhead across your business.</p>
+        <div class="offer-tags"><span class="offer-tag">ERP</span><span class="offer-tag">API</span><span class="offer-tag">Integration</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO WE SERVE -->
+<section id="serve">
+  <div class="sw">
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span>Who we serve</p>
+    <h2 class="sh reveal">Tailored for <span class="serif">every scale of ambition.</span></h2>
+    <div class="serve-grid">
+      <div class="serve-card reveal">
+        <div class="serve-type">Small &amp; Medium Enterprise</div>
+        <h3 class="serve-title">Built for SMEs</h3>
+        <p class="serve-desc">Practical, right-sized advice without enterprise price tags. We focus on impact per dollar for growing businesses.</p>
+        <ul class="serve-list">
+          <li>Fractional CTO and IT leadership</li>
+          <li>Quick-win automation and tooling</li>
+          <li>Technology vendor selection &amp; negotiation</li>
+          <li>Cyber essentials and compliance basics</li>
+          <li>AI readiness assessment &amp; pilot programs</li>
+        </ul>
+        <div class="serve-bg">SME</div>
+      </div>
+      <div class="serve-card reveal">
+        <div class="serve-type">Enterprise &amp; ASX-Listed</div>
+        <h3 class="serve-title">Built for Scale</h3>
+        <p class="serve-desc">Strategic depth and delivery rigour for complex organisations navigating transformation at enterprise scale.</p>
+        <ul class="serve-list">
+          <li>Enterprise AI strategy and governance</li>
+          <li>Large-scale digital transformation programs</li>
+          <li>IT due diligence for M&amp;A transactions</li>
+          <li>Board-level technology advisory</li>
+          <li>Cross-functional change management</li>
+        </ul>
+        <div class="serve-bg">ENT</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI PRACTICE -->
+<section id="ai">
+  <div class="sw">
+    <div class="ai-layout">
+      <div class="ai-visual reveal">
+        <div class="ai-card ai-card-1">
+          <div class="ai-card-label">AI Readiness Score</div>
+          <div class="ai-card-title">Data Infrastructure</div>
+          <div class="ai-card-val">Structured &middot; Accessible &middot; Governed</div>
+          <div class="ai-bar"><div class="ai-bar-fill" style="width:82%"></div></div>
+        </div>
+        <div class="ai-card ai-card-2">
+          <div class="ai-card-label">Active AI Initiative</div>
+          <div class="ai-card-title">Intelligent Document Processing</div>
+          <div class="ai-card-val">85% reduction in manual handling time</div>
+          <div class="ai-bar"><div class="ai-bar-fill" style="width:68%;animation-delay:1.2s"></div></div>
+        </div>
+        <div class="ai-card ai-card-3">
+          <div class="ai-card-label">Automation Pipeline</div>
+          <div class="ai-card-title">Customer Support + CRM Sync</div>
+          <div class="ai-card-val">3 workflows &middot; Live in production</div>
+          <div class="ai-bar"><div class="ai-bar-fill" style="width:91%;animation-delay:1.4s"></div></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <p class="eyebrow"><span class="eyebrow-line"></span>AI Practice</p>
+        <h2 class="sh">AI that works in<br><span class="serif">the real world.</span></h2>
+        <p class="sb">We cut through the hype. Our AI advisory focuses on genuine business outcomes &mdash; finding the right use cases, building solid foundations, and implementing responsibly.</p>
+        <div class="ai-features">
+          <div class="ai-feature">
+            <div class="ai-feature-icon">&#127919;</div>
+            <div>
+              <div class="ai-feature-title">Use Case Identification</div>
+              <div class="ai-feature-desc">Map your operations to find where AI delivers measurable ROI &mdash; not where it just looks impressive.</div>
+            </div>
+          </div>
+          <div class="ai-feature">
+            <div class="ai-feature-icon">&#127959;</div>
+            <div>
+              <div class="ai-feature-title">Foundation &amp; Architecture</div>
+              <div class="ai-feature-desc">Data quality, governance, and infrastructure built to support AI reliably from day one.</div>
+            </div>
+          </div>
+          <div class="ai-feature">
+            <div class="ai-feature-icon">&#128640;</div>
+            <div>
+              <div class="ai-feature-title">Implementation &amp; Integration</div>
+              <div class="ai-feature-desc">LLM tools, RPA pipelines &mdash; built, integrated, and handed over with full capability transfer.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="sw">
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span>How we work</p>
+    <h2 class="sh reveal">A clear process, <span class="serif">every engagement.</span></h2>
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <div class="step-circle">01</div>
+        <div class="step-name">Discovery</div>
+        <div class="step-desc">Learn your goals, constraints, and what's really holding you back.</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-circle">02</div>
+        <div class="step-name">Diagnosis</div>
+        <div class="step-desc">Honest gap assessment across technology, process, and people.</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-circle">03</div>
+        <div class="step-name">Roadmap</div>
+        <div class="step-desc">Prioritised plan with quick wins, milestones, and a long-term north star.</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-circle">04</div>
+        <div class="step-name">Execute</div>
+        <div class="step-desc">Hands-on delivery with full accountability for outcomes &mdash; not just advice.</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-circle">05</div>
+        <div class="step-name">Embed &amp; Exit</div>
+        <div class="step-desc">Build your internal capability, then step back when you're ready.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sw">
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span>Contact us</p>
+    <h2 class="sh reveal">Let's talk about <span class="serif">what's possible.</span></h2>
+    <div class="contact-layout">
+      <div class="contact-left reveal">
+        <p>Whether you're an SME exploring AI for the first time, or a large organisation navigating complex digital transformation &mdash; we'd like to hear about your situation.</p>
+        <p>No hard sell. Just a straightforward conversation about where you are and where you want to go.</p>
+        <div class="contact-details">
+          <div class="cd-row">
+            <div class="cd-icon">&#9993;</div>
+            <div>
+              <div class="cd-label">Email</div>
+              <div class="cd-val">info@superfluidity.com.au</div>
+            </div>
+          </div>
+          <div class="cd-row">
+            <div class="cd-icon">&#128205;</div>
+            <div>
+              <div class="cd-label">Location</div>
+              <div class="cd-val">Brisbane, QLD, Australia</div>
+            </div>
+          </div>
+          <div class="cd-row">
+            <div class="cd-icon">&#128336;</div>
+            <div>
+              <div class="cd-label">Response time</div>
+              <div class="cd-val">Within one business day</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal">
+        <div class="form-title">Send us a message</div>
+        <div class="form-sub">We'll respond within one business day</div>
+        <form class="fields" id="contactForm">
+          <div class="field-row">
+            <div class="field"><label for="fn">First name</label><input id="fn" type="text" placeholder="Jane" required /></div>
+            <div class="field"><label for="ln">Last name</label><input id="ln" type="text" placeholder="Smith" required /></div>
+          </div>
+          <div class="field"><label for="em">Work email</label><input id="em" type="email" placeholder="jane@yourcompany.com.au" required /></div>
+          <div class="field-row">
+            <div class="field"><label for="co">Company</label><input id="co" type="text" placeholder="Company name" /></div>
+            <div class="field">
+              <label for="sz">Company size</label>
+              <select id="sz">
+                <option value="" disabled selected>Select&hellip;</option>
+                <option>1&ndash;10 employees</option>
+                <option>11&ndash;50 employees</option>
+                <option>51&ndash;200 employees</option>
+                <option>201&ndash;1000 employees</option>
+                <option>1000+ employees</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="sv">Service area</label>
+            <select id="sv">
+              <option value="" disabled selected>What can we help with?</option>
+              <option>Business Strategy &amp; Transformation</option>
+              <option>IT Strategy &amp; Modernisation</option>
+              <option>AI &amp; Automation Advisory</option>
+              <option>Cyber Security &amp; Compliance</option>
+              <option>Data &amp; Analytics</option>
+              <option>Systems Integration &amp; ERP</option>
+              <option>Not sure yet &mdash; need a conversation</option>
+            </select>
+          </div>
+          <div class="field"><label for="msg">Your challenge</label><textarea id="msg" rows="3" placeholder="What are you working through?"></textarea></div>
+          <button type="submit" class="btn-submit">Send message &rarr;</button>
+          <div class="form-ok" id="formOk">&#10003; Message sent &mdash; we'll be in touch shortly.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#hero" class="footer-logo">
+    <div class="logo-mark">SF</div>
+    <span class="logo-text">Superfluidity</span>
+  </a>
+  <div class="footer-links">
+    <a href="#offerings">Services</a>
+    <a href="#serve">Who We Serve</a>
+    <a href="#ai">AI Practice</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="footer-copy">&copy; 2026 Superfluidity Pty Ltd &middot; Brisbane, Australia</div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.btn-submit');
+    btn.textContent = 'Sending\u2026'; btn.disabled = true;
+    setTimeout(() => { btn.style.display = 'none'; document.getElementById('formOk').style.display = 'block'; }, 900);
+  });
+</script>
+</body>
+</html>
